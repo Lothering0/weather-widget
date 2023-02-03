@@ -1,0 +1,1 @@
+export { getCurrentCoords } from "./getCurrentCoords";

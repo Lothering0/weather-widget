@@ -1,7 +1,7 @@
-import { languageCode } from "./languageCode";
+import { LanguageCode } from "./LanguageCode";
 import { unitsOfMeasurement } from "./unitsOfMeasurement";
 
 export interface FetchWeatherParams {
-  readonly lang?: languageCode;
+  readonly lang?: LanguageCode;
   readonly units?: unitsOfMeasurement;
 }

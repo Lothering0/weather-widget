@@ -9,12 +9,12 @@
 import { onMounted, ref } from "vue";
 import { Loader } from "@/UI";
 import { fetchWeather } from "@/api/OpenWeather";
-import { LanguageCode, unitsOfMeasurement } from "@/types/OpenWeatherApi";
+import { LanguageCode, UnitsOfMeasurement } from "@/types/OpenWeatherApi";
 import { CitiesStore } from "@/store";
 
-const { lang, units } = defineProps<{
+const { lang, units = UnitsOfMeasurement.METRIC } = defineProps<{
   readonly lang?: LanguageCode;
-  readonly units?: unitsOfMeasurement
+  readonly units?: UnitsOfMeasurement;
 }>();
 
 const loading = ref(true);

@@ -1,10 +1,11 @@
 <template>
   <div class="weather-widget__list-item">
-    <div>City: {{ city }}</div>
+    <div>City: {{ city }}, {{ country }}</div>
     <div>Temperature: {{ temperature }}</div>
     <div>Feels like: {{ feelsLike }}</div>
     <div>Clouds: {{ clouds }}</div>
     <div>Humidity: {{ humidity }}</div>
+    <div>Dew point: {{ dewPoint }}</div>
     <div>Pressure: {{ pressure }}</div>
     <div>Visibility: {{ visibility }}</div>
     <div>Wind speed: {{ windSpeed }}</div>
@@ -14,7 +15,7 @@
 
 <script setup lang="ts">
 import { OpenWeatherResponse } from "@/types/OpenWeatherApi";
-import { getWindDirection } from "./helpers";
+import { getDewPoint, getWindDirection } from "./helpers";
 
 const { weather } = defineProps<{
   readonly weather: OpenWeatherResponse;
@@ -23,10 +24,12 @@ const { weather } = defineProps<{
 const celsium = "°C";
 
 const city = weather.name;
+const country = weather.sys.country;
 const temperature = weather.main.temp.toFixed(0) + celsium;
 const feelsLike = weather.main.feels_like.toFixed(0) + celsium;
 const clouds = weather.weather[0].description;
 const humidity = weather.main.humidity + "%";
+const dewPoint = getDewPoint(weather.main.temp, weather.main.humidity);
 const pressure = weather.main.pressure + "hPa";
 const visibility = (weather.visibility / 1000).toFixed(1) + "km";
 const windSpeed = weather.wind.speed + "m/s";

@@ -7,15 +7,21 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { fetchWeather } from "@/api/OpenWeather";
-import { languageCode, unitsOfMeasurement } from "@/types/OpenWeatherApi";
+import { LanguageCode, unitsOfMeasurement } from "@/types/OpenWeatherApi";
 
 const { lang, units } = defineProps<{
-  readonly lang?: languageCode;
+  readonly lang?: LanguageCode;
   readonly units?: unitsOfMeasurement
 }>();
 
-onMounted(() => {
-  fetchWeather({ lang, units });
+onMounted(async () => {
+  try {
+    const data = await fetchWeather({ lang, units });
+
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
 });
 </script>
 

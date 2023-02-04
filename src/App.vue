@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { WeatherWidget } from "@/modules";
+import { WeatherWidget } from "@/components";
 </script>
 
 <style lang="scss">

@@ -23,6 +23,8 @@ const styles = computed(() => ({
 
 <style scoped lang="scss">
 .loader {
+  margin: 0 auto;
+
   border: 10px solid;
   border-radius: 50%;
 

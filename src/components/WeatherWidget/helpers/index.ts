@@ -1,0 +1,1 @@
+export { getWindDirection } from "./getWindDirection";

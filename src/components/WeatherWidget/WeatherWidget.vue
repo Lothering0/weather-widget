@@ -1,7 +1,7 @@
 <template>
   <div class="weather-widget">
-    <h1>Weather here</h1>
     <Loader v-if="loading" />
+    <WeatherWidgetList v-else :weathers="weathers" />
   </div>
 </template>
 
@@ -11,6 +11,9 @@ import { Loader } from "@/UI";
 import { fetchWeather } from "@/api/OpenWeather";
 import { LanguageCode, UnitsOfMeasurement } from "@/types/OpenWeatherApi";
 import { CitiesStore } from "@/store";
+import { Maybe } from "@/types/common";
+import { OpenWeatherResponse } from "@/types/OpenWeatherApi";
+import WeatherWidgetList from "./WeatherWidgetList.vue";
 
 const { lang, units = UnitsOfMeasurement.METRIC } = defineProps<{
   readonly lang?: LanguageCode;
@@ -18,13 +21,14 @@ const { lang, units = UnitsOfMeasurement.METRIC } = defineProps<{
 }>();
 
 const loading = ref(true);
+const weathers = ref<Maybe<OpenWeatherResponse[]>>(null);
 
 onMounted(async () => {
   try {
     const data = await fetchWeather({ lang, units });
 
     CitiesStore.setCitiesIfStoreIsEmpty(data[0].name);
-    console.log(data);
+    weathers.value = data;
   } catch (error) {
     console.error(error);
   } finally {

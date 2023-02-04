@@ -23,17 +23,18 @@ const styles = computed(() => ({
 
 <style scoped lang="scss">
 .loader {
-  border: 10px solid magenta;
+  border: 10px solid;
   border-radius: 50%;
 
-  animation: loading 0.5s ease-in-out infinite alternate-reverse;
+  animation: loading 0.7s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes loading {
   from {
-    opacity: 0.5;
+    border-color: #9026d9;
   }
   to {
+    border-color: #3c26d9;
     opacity: 1;
   }
 }

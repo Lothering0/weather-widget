@@ -10,6 +10,7 @@ import { onMounted, ref } from "vue";
 import { Loader } from "@/UI";
 import { fetchWeather } from "@/api/OpenWeather";
 import { LanguageCode, unitsOfMeasurement } from "@/types/OpenWeatherApi";
+import { CitiesStore } from "@/store";
 
 const { lang, units } = defineProps<{
   readonly lang?: LanguageCode;
@@ -22,6 +23,7 @@ onMounted(async () => {
   try {
     const data = await fetchWeather({ lang, units });
 
+    CitiesStore.setCitiesIfStoreIsEmpty(data[0].name);
     console.log(data);
   } catch (error) {
     console.error(error);

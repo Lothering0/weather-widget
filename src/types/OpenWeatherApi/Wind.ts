@@ -1,4 +1,4 @@
 export interface Wind {
-  readonly deq: number;
+  readonly deg: number;
   readonly speed: number;
 }

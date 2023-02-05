@@ -27,7 +27,7 @@ const city = weather.name;
 const country = weather.sys.country;
 const temperature = weather.main.temp.toFixed(0) + celsium;
 const feelsLike = weather.main.feels_like.toFixed(0) + celsium;
-const clouds = weather.weather[0].description;
+const clouds = weather.weather[0].main;
 const humidity = weather.main.humidity + "%";
 const dewPoint = getDewPoint(weather.main.temp, weather.main.humidity);
 const pressure = weather.main.pressure + "hPa";
@@ -40,10 +40,14 @@ const windDirection = getWindDirection(weather.wind.deg);
 .weather-widget__list-item {
   padding: 10px 20px;
 
-  background: black;
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 
-  color: white;
+  color: #222;
   line-height: 28px;
+
+  & + & {
+    margin-top: 10px;
+  }
 }
 </style>

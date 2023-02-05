@@ -1,5 +1,5 @@
 <template>
-  <div :style="styles" class="loader"></div>
+  <div :style="styles" class="ww-loader"></div>
 </template>
 
 <script setup lang="ts">
@@ -22,7 +22,7 @@ const styles = computed(() => ({
 </script>
 
 <style scoped lang="scss">
-.loader {
+.ww-loader {
   margin: 0 auto;
 
   border: 10px solid;
@@ -37,7 +37,6 @@ const styles = computed(() => ({
   }
   to {
     border-color: #3c26d9;
-    opacity: 1;
   }
 }
 </style>

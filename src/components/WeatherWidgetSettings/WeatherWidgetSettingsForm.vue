@@ -13,8 +13,8 @@ import { CitiesStore } from "@/store";
 const value = ref("");
 
 const addCityToStore = () => {
-  value.value = "";
   CitiesStore.push(value.value);
+  value.value = "";
 };
 </script>
 

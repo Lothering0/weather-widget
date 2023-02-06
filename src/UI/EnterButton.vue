@@ -2,7 +2,7 @@
   <Button
     type="submit"
     class="ww-enter-button"
-  >AAA</Button>
+  >Add</Button>
 </template>
 
 <script setup lang="ts">

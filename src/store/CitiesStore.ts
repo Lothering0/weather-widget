@@ -1,11 +1,19 @@
+import { ref } from "vue";
+import { WeathersStore } from "./WeathersStore";
 import { compose, removeDuplicates } from "@/functions";
 import { city } from "@/types/browserApi";
 import { Maybe } from "@/types/common";
 
 export class CitiesStore {
-  private static _KEY = "cities";
+  private static readonly _KEY = "cities";
 
-  public static getCities(): Maybe<city[]> {
+  public static readonly cities = ref<Maybe<city[]>>(CitiesStore._getCities());
+
+  private static _refreshCities(): void {
+    CitiesStore.cities.value = CitiesStore._getCities();
+  }
+
+  private static _getCities(): Maybe<city[]> {
     const citiesItem = localStorage.getItem(CitiesStore._KEY);
 
     if (!citiesItem) return null;
@@ -15,7 +23,7 @@ export class CitiesStore {
   }
 
   public static setCitiesIfStoreIsEmpty(city: city): city[] {
-    const cities = CitiesStore.getCities();
+    const cities = CitiesStore.cities.value;
 
     if (cities) return cities;
 
@@ -25,21 +33,24 @@ export class CitiesStore {
   private static _setCities(cities: city[]): city[] {
     const stringified = JSON.stringify(cities);
     localStorage.setItem(CitiesStore._KEY, stringified);
+    CitiesStore._refreshCities();
+    WeathersStore.refresh();
 
     return cities;
   }
 
   public static push(city: city): city[] {
     const push = compose(CitiesStore._setCities, removeDuplicates);
-    const cities = CitiesStore.getCities();
+    const cities = CitiesStore.cities.value;
 
     if (!cities) return CitiesStore.setCitiesIfStoreIsEmpty(city);
 
-    return push([...cities, city]);
+    const value = [...cities, city];
+    return push(value);
   }
 
   public static remove(city: city): Maybe<city[]> {
-    const cities = CitiesStore.getCities();
+    const cities = CitiesStore.cities.value;
 
     if (!cities) return cities;
 

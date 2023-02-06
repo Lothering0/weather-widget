@@ -9,10 +9,11 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from "vue";
 import { CitiesStore } from "@/store";
 import WeatherWidgetSettingsListItem from "./WeatherWidgetSettingsListItem.vue";
 
-const cities = CitiesStore.getCities();
+const cities = CitiesStore.cities;
 </script>
 
 <style scoped lang="scss">

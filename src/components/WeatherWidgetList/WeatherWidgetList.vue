@@ -1,5 +1,5 @@
 <template>
-  <Loader v-if="loading" />
+  <Loader v-if="isLoading" />
   <div class="weather-widget__list" v-else>
     <Title>Weather</Title>
     <WeatherWidgetListItem
@@ -13,8 +13,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { Loader, Title } from "@/UI";
-import { fetchWeather } from "@/api/OpenWeather";
-import { CitiesStore } from "@/store";
+import { WeathersStore } from "@/store";
 import { Maybe } from "@/types/common";
 import {
   OpenWeatherResponse,
@@ -28,19 +27,8 @@ const { lang, units } = defineProps<{
   readonly units: UnitsOfMeasurement;
 }>();
 
-const loading = ref(true);
-const weathers = ref<Maybe<OpenWeatherResponse[]>>(null);
+const isLoading = WeathersStore.isLoading;
+const weathers = WeathersStore.weathers;
 
-onMounted(async () => {
-  try {
-    const data = await fetchWeather({ lang, units });
-
-    CitiesStore.setCitiesIfStoreIsEmpty(data[0].name);
-    weathers.value = data;
-  } catch (error) {
-    console.error(error);
-  } finally {
-    loading.value = false;
-  }
-});
+onMounted(async () => WeathersStore.fetch({ lang, units }));
 </script>

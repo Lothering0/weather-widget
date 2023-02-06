@@ -1,7 +1,7 @@
 <template>
   <Button class="ww-settings-button">
-    <span v-show="!activated">QQQ</span>
-    <span v-show="activated">EEE</span>
+    <span v-show="!activated">Settings</span>
+    <span v-show="activated">Close</span>
   </Button>
 </template>
 

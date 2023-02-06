@@ -1,4 +1,4 @@
-import { getPosition, getPromises } from "./helpers";
+import { getPosition, getResponses } from "./helpers";
 import {
   FetchWeatherParams,
   OpenWeatherResponse
@@ -10,10 +10,5 @@ export const fetchWeather = async (
   const positions = await getPosition();
   if (!positions.length) return [];
 
-  const promises: Promise<OpenWeatherResponse>[] = await getPromises(
-    params,
-    positions
-  );
-
-  return Promise.all<OpenWeatherResponse>(promises);
+  return getResponses(params, positions);
 };

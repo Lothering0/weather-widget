@@ -1,3 +1,3 @@
 export { generateUri } from "./generateUri";
-export { getPromises } from "./getPromises";
+export { getResponses } from "./getResponses";
 export { getPosition } from "./getPosition";

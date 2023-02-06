@@ -13,9 +13,9 @@
 <script setup lang="ts">
 import { ref, withDefaults } from "vue";
 import { SettingsButton } from "@/UI";
-import { WeatherWidgetList } from "../WeatherWidgetList";
 import { WeatherWidgetSettings } from "../WeatherWidgetSettings";
 import { LanguageCode, UnitsOfMeasurement } from "@/types/OpenWeatherApi";
+import WeatherWidgetList from "./WeatherWidgetList.vue";
 
 const showSettings = ref(false);
 const switchPanel = () => (showSettings.value = !showSettings.value);

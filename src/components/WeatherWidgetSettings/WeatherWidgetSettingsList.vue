@@ -1,6 +1,6 @@
 <template>
   <div class="weather-widget__settings-list">
-    <WeatherWidgetSettingsListItem
+    <WeatherWidgetSettingsItem
       v-for="city in cities"
       :city="city"
       :key="city"
@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { CitiesStore } from "@/store";
-import WeatherWidgetSettingsListItem from "./WeatherWidgetSettingsListItem.vue";
+import WeatherWidgetSettingsItem from "./WeatherWidgetSettingsItem.vue";
 
 const cities = CitiesStore.cities;
 </script>

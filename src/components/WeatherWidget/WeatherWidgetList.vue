@@ -2,7 +2,7 @@
   <Loader v-if="isLoading" />
   <div class="weather-widget__list" v-else>
     <Title>Weather</Title>
-    <WeatherWidgetListItem
+    <WeatherWidgetItem
       v-for="weather, index in weathers"
       :weather="weather"
       :key="index"
@@ -20,7 +20,7 @@ import {
   LanguageCode,
   UnitsOfMeasurement
 } from "@/types/OpenWeatherApi";
-import WeatherWidgetListItem from "./WeatherWidgetListItem.vue";
+import WeatherWidgetItem from "./WeatherWidgetItem.vue";
 
 const { lang, units } = defineProps<{
   readonly lang: LanguageCode;

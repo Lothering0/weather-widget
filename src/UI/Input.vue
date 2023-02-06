@@ -2,6 +2,7 @@
   <div class="ww-input-form">
     <label v-if="label" :for="id">{{ label }}</label>
     <input
+      v-model="model"
       type="text"
       :id="id"
       @input="$emit('update:modelValue', $event.target.value)"
@@ -10,7 +11,9 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
+import { computed } from "vue";
+
+const props = defineProps({
   id: {
     type: String,
     required: true
@@ -24,7 +27,16 @@ defineProps({
     required: true
   }
 });
-defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
+
+const model = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    return emit("update:modelValue");
+  }
+});
 </script>
 
 <style lang="scss">

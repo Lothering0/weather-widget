@@ -9,6 +9,8 @@ export const getPromises = (
   params: FetchWeatherParams,
   positions: Coords[] | city[]
 ): Promise<Promise<OpenWeatherResponse>[]> => new Promise((resolve, reject) => {
+  if (!positions.length) return [];
+
   const promises: Promise<OpenWeatherResponse>[] = [];
 
   const forEachHandler = async (position: Coords | city, index: number) => {

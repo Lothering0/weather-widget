@@ -22,7 +22,8 @@ export class WeathersStore {
       WeathersStore._lastFetchParams = params;
       const response = await fetchWeather(params);
 
-      CitiesStore.setCitiesIfStoreIsEmpty(response[0].name);
+      if (response[0]) CitiesStore.setCitiesIfStoreIsEmpty(response[0].name);
+
       WeathersStore.weathers.value = response;
     } catch (error) {
       console.error(error);

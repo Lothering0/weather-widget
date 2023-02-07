@@ -27,10 +27,10 @@ export class CitiesStore {
 
     if (cities) return cities;
 
-    return CitiesStore._setCities([city]);
+    return CitiesStore.setCities([city]);
   }
 
-  private static _setCities(cities: city[]): city[] {
+  public static setCities(cities: city[]): city[] {
     const stringified = JSON.stringify(cities);
     localStorage.setItem(CitiesStore._KEY, stringified);
     CitiesStore._refreshCities();
@@ -40,7 +40,7 @@ export class CitiesStore {
   }
 
   public static push(city: city): city[] {
-    const push = compose(CitiesStore._setCities, removeDuplicates);
+    const push = compose(CitiesStore.setCities, removeDuplicates);
     const cities = CitiesStore.cities.value;
 
     if (!cities) return CitiesStore.setCitiesIfStoreIsEmpty(city);
@@ -56,6 +56,6 @@ export class CitiesStore {
 
     const filtered = cities.filter((item) => item !== city);
 
-    return CitiesStore._setCities(filtered);
+    return CitiesStore.setCities(filtered);
   }
 }

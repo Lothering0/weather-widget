@@ -1,12 +1,13 @@
 <template>
   <div class="weather-widget__settings-list-item">
+    <DragButton />
     <span>{{ city }}</span>
-    <DeleteButton @click="removeCity">X</DeleteButton>
+    <DeleteButton @click="removeCity" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { DeleteButton } from "@/UI";
+import { DeleteButton, DragButton } from "@/UI";
 import { CitiesStore } from "@/store";
 
 const { city } = defineProps({

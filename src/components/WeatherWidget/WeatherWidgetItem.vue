@@ -1,5 +1,5 @@
 <template>
-  <div class="weather-widget-item">
+  <div :class="classes">
     <div class="weather-widget-item__main">
       <div class="weather-widget-item__temperature">
         <Icon :icon="icon" />
@@ -54,13 +54,18 @@ const pressure = getPressure(weather.main.pressure);
 const visibility = getVisibility(weather.visibility);
 const windSpeed = getWindSpeed(weather.wind.speed);
 const windDirection = getWindDirection(weather.wind.deg);
+
+const classes = ["weather-widget-item", icon];
 </script>
 
 <style scoped lang="scss">
+@mixin bg($first, $second) {
+  background-image: linear-gradient($first 70%, $second 120%);
+}
+
 .weather-widget-item {
   padding: 10px 18px;
 
-  background-image: linear-gradient(#6c47bb 70%, #2b3b91 120%);
   border-radius: 10px;
   box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.25);
 
@@ -125,6 +130,78 @@ const windDirection = getWindDirection(weather.wind.deg);
         text-align: right;
       }
     }
+  }
+
+  &.#{$icon}-01d {
+    @include bg(#5fbb76, #b5f032);
+  }
+
+  &.#{$icon}-01n {
+    @include bg(#6ab57c, #215124);
+  }
+
+  &.#{$icon}-02d {
+    @include bg(#66c0e3, #254b95);
+  }
+
+  &.#{$icon}-02n {
+    @include bg(#438daa, #132342);
+  }
+
+  &.#{$icon}-03d {
+    @include bg(#55bcc1, #9e72bd);
+  }
+
+  &.#{$icon}-03n {
+    @include bg(#449b9f, #8c62aa);
+  }
+
+  &.#{$icon}-04d {
+    @include bg(#8567c6, #425be6);
+  }
+
+  &.#{$icon}-04n {
+    @include bg(#6c47bb, #2b3b91);
+  }
+
+  &.#{$icon}-09d {
+    @include bg(#5f83bb, #4132f0);
+  }
+
+  &.#{$icon}-09n {
+    @include bg(#4d6a97, #1a1282);
+  }
+
+  &.#{$icon}-10d {
+    @include bg(#439cb7, #266bb5);
+  }
+
+  &.#{$icon}-10n {
+    @include bg(#2f7388, #113760);
+  }
+
+  &.#{$icon}-11d {
+    @include bg(#151620, #423a22);
+  }
+
+  &.#{$icon}-11n {
+    @include bg(#151515, #4a3a09);
+  }
+
+  &.#{$icon}-13d {
+    @include bg(#a2a2a2, #313131);
+  }
+
+  &.#{$icon}-13n {
+    @include bg(#797979, #202020);
+  }
+
+  &.#{$icon}-50d {
+    @include bg(#9897b5, #28514b);
+  }
+
+  &.#{$icon}-50n {
+    @include bg(#68687d, #0e313c);
   }
 }
 </style>

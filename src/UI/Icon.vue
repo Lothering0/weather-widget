@@ -13,8 +13,6 @@ const classes = ["ww-icon", icon];
 </script>
 
 <style scoped lang="scss">
-$icon: open-weather-icon;
-
 @mixin icon-position($row, $column) {
   $rows: -87px -223px -361px -499px -638px;
   $columns: -63px -170px -273px -382px -488px;

@@ -5,7 +5,8 @@ export type {
   WeatherInfoConditions,
   WeatherInfoDescription,
   WeatherInfoIcon,
-  WeatherInfoId
+  WeatherInfoId,
+  WeatherInfoMain
 } from "./WeatherInfo";
 export { LanguageCode } from "./LanguageCode";
 export { UnitsOfMeasurement } from "./UnitsOfMeasurement";

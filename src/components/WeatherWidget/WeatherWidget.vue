@@ -32,6 +32,7 @@ withDefaults(defineProps<{
 .weather-widget {
   position: relative;
 
+  width: 370px;
   padding: 10px;
   border: 1px solid;
 

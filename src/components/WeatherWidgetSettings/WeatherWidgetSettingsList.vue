@@ -24,6 +24,6 @@ const onUpdate = () => {
 
 <style scoped lang="scss">
 .weather-widget__settings-list {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 </style>

@@ -5,7 +5,6 @@
 <style scoped lang="scss">
 .ww-button {
   cursor: pointer;
-  transition: 0.3s ease;
 
   &[disabled] {
     opacity: 0.5;

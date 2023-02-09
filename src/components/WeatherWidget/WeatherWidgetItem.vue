@@ -1,30 +1,50 @@
 <template>
-  <div :class="classes">
-    <div class="weather-widget-item__main">
+  <Card :class="classes">
+    <section class="weather-widget-item__main">
       <div class="weather-widget-item__temperature">
         <Icon :icon="icon" />
         <div class="weather-widget-item__temperature-value">{{ temperature }}</div>
       </div>
-      <ul class="weather-widget-item__secondary">
-        <li class="weather-widget-item__secondary-item">Feels like: {{ feelsLike }}</li>
-        <li class="weather-widget-item__secondary-item">{{ clouds }}</li>
-        <li class="weather-widget-item__secondary-item">{{ description }}</li>
-      </ul>
-    </div>
-    <ul class="weather-widget-item__info">
-      <li class="weather-widget-item__info-item">Humidity: {{ humidity }}</li>
-      <li class="weather-widget-item__info-item">Dew point: {{ dewPoint }}</li>
-      <li class="weather-widget-item__info-item">Pressure: {{ pressure }}</li>
-      <li class="weather-widget-item__info-item">Visibility: {{ visibility }}</li>
-      <li class="weather-widget-item__info-item">Wind speed: {{ windSpeed }}</li>
-      <li class="weather-widget-item__info-item">Wind direction: {{ windDirection }}</li>
-    </ul>
-    <div class="weather-widget-item__position">{{ city }}, {{ country }}</div>
-  </div>
+      <WeatherWidgetSecondary>
+        <WeatherWidgetSecondaryItem>Feels like: {{ feelsLike }}</WeatherWidgetSecondaryItem>
+        <WeatherWidgetSecondaryItem>{{ clouds }}</WeatherWidgetSecondaryItem>
+        <WeatherWidgetSecondaryItem>{{ description }}</WeatherWidgetSecondaryItem>
+      </WeatherWidgetSecondary>
+    </section>
+    <section>
+      <WeatherWidgetInfo>
+        <WeatherWidgetInfoItem
+          icon="droplet"
+          title="Humidity"
+        >{{ humidity }}</WeatherWidgetInfoItem>
+        <WeatherWidgetInfoItem
+          icon="arrow-down"
+          title="Pressure"
+        >{{ pressure }}</WeatherWidgetInfoItem>
+        <WeatherWidgetInfoItem
+          icon="location-arrow"
+          title="Wind speed and direction"
+        >{{ windSpeed }} {{ windDirection }}</WeatherWidgetInfoItem>
+        <WeatherWidgetInfoItem
+          icon="eye"
+          title="Visibility"
+        >{{ visibility }}</WeatherWidgetInfoItem>
+        <WeatherWidgetInfoItem
+          icon="temperature-low"
+          title="Dew point"
+        >{{ dewPoint }}</WeatherWidgetInfoItem>
+      </WeatherWidgetInfo>
+    </section>
+    <section class="weather-widget-item__position">{{ city }}, {{ country }}</section>
+  </Card>
 </template>
 
 <script setup lang="ts">
-import { Icon } from "@/UI";
+import { Card, Icon } from "@/UI";
+import WeatherWidgetSecondary from "./WeatherWidgetSecondary.vue";
+import WeatherWidgetSecondaryItem from "./WeatherWidgetSecondaryItem.vue";
+import WeatherWidgetInfo from "./WeatherWidgetInfo.vue";
+import WeatherWidgetInfoItem from "./WeatherWidgetInfoItem.vue";
 import { OpenWeatherResponse } from "@/types/OpenWeatherApi";
 import {
   getDewPoint,
@@ -59,27 +79,10 @@ const classes = ["weather-widget-item", icon];
 </script>
 
 <style scoped lang="scss">
-@mixin bg($first, $second) {
-  background-image: linear-gradient($first 70%, $second 120%);
-}
-
 .weather-widget-item {
-  padding: 10px 18px;
-
-  border-radius: 10px;
-  box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.25);
-
-  color: white;
-  line-height: 28px;
-
-  & + & {
-    margin-top: 10px;
-  }
-
   &__main {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
 
     & > * {
       text-align: right;
@@ -89,6 +92,7 @@ const classes = ["weather-widget-item", icon];
   &__temperature {
     display: flex;
     align-items: center;
+    font-weight: 600;
 
     &-value {
       margin-left: 10px;
@@ -96,40 +100,14 @@ const classes = ["weather-widget-item", icon];
     }
   }
 
-  &__secondary {
-    &-item {
-      line-height: 21px;
-      letter-spacing: 0.4px;
-
-      &::first-letter {
-        text-transform: uppercase;
-      }
-    }
-  }
-
   &__position {
-    font-size: 20px;
-    font-weight: 700;
+    font-family: "Pacifico", cursive;
+    font-size: 23px;
+    font-weight: 500;
   }
 
   &__description {
     text-transform: capitalize;
-  }
-
-  &__info {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-
-    &-item {
-      width: 50%;
-      font-size: 15px;
-      line-height: 19px;
-
-      &:nth-child(2n) {
-        text-align: right;
-      }
-    }
   }
 
   &.#{$icon}-01d {

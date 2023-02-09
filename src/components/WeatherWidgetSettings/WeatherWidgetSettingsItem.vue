@@ -1,13 +1,13 @@
 <template>
-  <div class="weather-widget__settings-list-item">
+  <Card class="weather-widget__settings-item">
     <DragButton />
     <span>{{ city }}</span>
     <DeleteButton @click="removeCity" />
-  </div>
+  </Card>
 </template>
 
 <script setup lang="ts">
-import { DeleteButton, DragButton } from "@/UI";
+import { Card, DeleteButton, DragButton } from "@/UI";
 import { CitiesStore } from "@/store";
 
 const { city } = defineProps({
@@ -21,7 +21,17 @@ const removeCity = () => CitiesStore.remove(city);
 </script>
 
 <style scoped lang="scss">
-.weather-widget__settings-list-item {
-  text-decoration: underline;
+.weather-widget__settings-item {
+  @include bg(#a94ee8, #796dd2);
+  display: flex;
+  font-weight: 600;
+
+  .ww-drag-button {
+    margin-right: 20px;
+  }
+
+  .ww-delete-button {
+    margin-left: auto;
+  }
 }
 </style>

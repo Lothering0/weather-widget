@@ -1,7 +1,6 @@
 <template>
   <Loader v-if="isLoading" />
   <div class="weather-widget__list" v-else>
-    <Title>Weather</Title>
     <WeatherWidgetItem
       v-for="weather, index in weathers"
       :weather="weather"
@@ -12,7 +11,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { Loader, Title } from "@/UI";
+import { Loader } from "@/UI";
 import { WeathersStore } from "@/store";
 import { Maybe } from "@/types/common";
 import {

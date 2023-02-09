@@ -1,0 +1,7 @@
+@mixin transition {
+  transition: 0.3s ease;
+}
+
+@mixin bg($first, $second) {
+  background-image: linear-gradient($first 70%, $second 120%);
+}

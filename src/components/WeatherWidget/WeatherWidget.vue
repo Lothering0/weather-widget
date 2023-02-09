@@ -1,9 +1,8 @@
 <template>
   <div class="weather-widget">
-    <SettingsButton
-      class="weather-widget__settings-button"
+    <WeatherWidgetHeader
       :activated="showSettings"
-      @click="switchPanel"
+      @switchPanel="switchPanel"
     />
     <WeatherWidgetList v-show="!showSettings" :lang="lang" :units="units" />
     <WeatherWidgetSettings v-show="showSettings" />
@@ -12,10 +11,10 @@
 
 <script setup lang="ts">
 import { ref, withDefaults } from "vue";
-import { SettingsButton } from "@/UI";
 import { WeatherWidgetSettings } from "../WeatherWidgetSettings";
-import { LanguageCode, UnitsOfMeasurement } from "@/types/OpenWeatherApi";
+import WeatherWidgetHeader from "./WeatherWidgetHeader.vue";
 import WeatherWidgetList from "./WeatherWidgetList.vue";
+import { LanguageCode, UnitsOfMeasurement } from "@/types/OpenWeatherApi";
 
 const showSettings = ref(false);
 const switchPanel = () => (showSettings.value = !showSettings.value);
@@ -34,12 +33,5 @@ withDefaults(defineProps<{
 
   width: 370px;
   padding: 10px;
-  border: 1px solid;
-
-  &__settings-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
 }
 </style>

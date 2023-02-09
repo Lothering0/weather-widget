@@ -1,15 +1,34 @@
 <template>
-  <div :class="classes"></div>
+  <FontAwesomeIcon
+    v-if="isFontAwesome"
+    :class="classes"
+    :icon="fontAwesomeIcon"
+    :style="styles"
+  />
+  <div :class="classes" :style="styles" v-else></div>
 </template>
 
 <script setup lang="ts">
 import { WeatherInfoIcon } from "@/types/OpenWeatherApi";
 
-const { icon } = defineProps<{
+const { icon, width, height } = defineProps<{
   readonly icon: WeatherInfoIcon;
+  readonly width: string;
+  readonly height: string;
 }>();
 
-const classes = ["ww-icon", icon];
+const styles = (width || height) ? {
+  width: width || "auto",
+  height: height || "auto"
+} : {};
+
+const isFontAwesome = !icon.startsWith("open-weather-icon");
+const fontAwesomeIcon = `fa-solid fa-${icon}`;
+
+const classes = {
+  "ww-icon": true,
+  [icon]: !isFontAwesome
+};
 </script>
 
 <style scoped lang="scss">

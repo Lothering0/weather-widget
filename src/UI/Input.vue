@@ -4,6 +4,7 @@
       v-model="model"
       type="text"
       :id="id"
+      :placeholder="placeholder"
       @input="$emit('update:modelValue', $event.target.value)"
     >
     <label v-if="label" :for="id" :class="labelClasses">{{ label }}</label>
@@ -25,6 +26,10 @@ const props = defineProps({
   modelValue: {
     type: String,
     required: true
+  },
+  placeholder: {
+    type: String,
+    required: false
   }
 });
 const emit = defineEmits(["update:modelValue"]);
@@ -73,8 +78,18 @@ $inactive: #ccc;
     font-size: 15px;
     line-height: 15px;
 
+    &::placeholder {
+      @include transition;
+      color: $inactive;
+      opacity: 0;
+    }
+
     &:focus {
       border-bottom-color: $active;
+
+      &::placeholder {
+        opacity: 1;
+      }
     }
   }
 

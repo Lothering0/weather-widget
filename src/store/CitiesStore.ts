@@ -5,7 +5,7 @@ import { city } from "@/types/browserApi";
 import { Maybe } from "@/types/common";
 
 export class CitiesStore {
-  private static readonly _KEY = "cities";
+  private static readonly _KEY = "ww-cities";
 
   public static readonly cities = ref<Maybe<city[]>>(CitiesStore._getCities());
 

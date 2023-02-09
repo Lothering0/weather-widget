@@ -24,7 +24,8 @@ const classes = ["ww-icon", icon];
   width: 60px;
   height: 60px;
 
-  background-image: url("@/assets/icons/weather.svg");
+  background-image: url("@/assets/icons/weather_icons.svg");
+  background-repeat: no-repeat;
 
   &.#{$icon}-01d {
     @include icon-position(1, 1);
@@ -43,10 +44,14 @@ const classes = ["ww-icon", icon];
   }
 
   &.#{$icon}-03d,
-  &.#{$icon}-03n,
+  &.#{$icon}-03n {
+    @include icon-position(1, 5);
+  }
+
   &.#{$icon}-04d,
   &.#{$icon}-04n {
-    @include icon-position(1, 5);
+    background-image: url("@/assets/icons/double_cloud.svg");
+    background-position-y: center;
   }
 
   &.#{$icon}-09d,

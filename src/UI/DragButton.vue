@@ -21,6 +21,7 @@ import Button from "./Button.vue";
     height: 2px;
 
     background: currentColor;
+    user-select: none;
 
     & + & {
       margin-top: 3px;

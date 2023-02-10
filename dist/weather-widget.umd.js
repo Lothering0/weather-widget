@@ -9441,7 +9441,7 @@ const clearObject = (object) => {
 ;// CONCATENATED MODULE: ./src/api/OpenWeather/config.ts
 const config = {
     PATH: "https://api.openweathermap.org/data/2.5/weather?",
-    APPID: ({"NODE_ENV":"production","VUE_APP_CSS_LINK":"https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@latest/dist/weather-widget.css","VUE_APP_VUE_LINK":"https://unpkg.com/vue@3/dist/vue.global.js","BASE_URL":"/"}).APPID || "1db6bd3fad9531f029bbb560463b62f2"
+    APPID: ({"NODE_ENV":"production","VUE_APP_CSS_LINK":"https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@main/dist/weather-widget.css","VUE_APP_VUE_LINK":"https://unpkg.com/vue@3/dist/vue.global.js","BASE_URL":"/"}).APPID || "1db6bd3fad9531f029bbb560463b62f2"
 };
 
 ;// CONCATENATED MODULE: ./src/api/OpenWeather/helpers/generateUri.ts
@@ -24131,7 +24131,7 @@ const mountCssLink = () => {
     const mountPoint = head || document;
     const element = document.createElement("link");
     element.rel = "stylesheet";
-    element.href = "https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@latest/dist/weather-widget.css";
+    element.href = "https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@main/dist/weather-widget.css";
     mountPoint.appendChild(element);
 };
 

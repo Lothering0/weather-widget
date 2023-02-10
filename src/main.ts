@@ -30,4 +30,4 @@ library.add(
 
 createApp(App)
   .component("FontAwesomeIcon", FontAwesomeIcon)
-  .mount("#app");
+  .mount("weather-widget");

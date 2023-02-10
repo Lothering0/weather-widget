@@ -7,8 +7,6 @@
 ```html
 <weather-widget></weather-widget>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@latest/dist/weather-widget.css">
-<script type="text/javascript" src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@latest/dist/weather-widget.umd.min.js"></script>
 ```
 

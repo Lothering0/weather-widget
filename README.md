@@ -1,5 +1,8 @@
 # weather-test
 
+![Widget](https://raw.githubusercontent.com/Lothering0/weather-widget/main/public/preview/widget.png)
+![Settings](https://raw.githubusercontent.com/Lothering0/weather-widget/main/public/preview/settings.png)
+
 ## Installation via CDN
 ```html
 <weather-widget></weather-widget>

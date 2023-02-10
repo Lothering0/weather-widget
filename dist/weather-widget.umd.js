@@ -9829,10 +9829,10 @@ const _hoisted_3 = /*#__PURE__*/ (0,external_commonjs_vue_commonjs2_vue_root_Vue
 
 ;// CONCATENATED MODULE: ./src/UI/DragButton.vue?vue&type=script&setup=true&lang=ts
  
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-65.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-65.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-65.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-65.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/DragButton.vue?vue&type=style&index=0&id=1aae6e1a&setup=true&lang=scss
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-65.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-65.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-65.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-65.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/DragButton.vue?vue&type=style&index=0&id=3d5adb89&setup=true&lang=scss
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/UI/DragButton.vue?vue&type=style&index=0&id=1aae6e1a&setup=true&lang=scss
+;// CONCATENATED MODULE: ./src/UI/DragButton.vue?vue&type=style&index=0&id=3d5adb89&setup=true&lang=scss
 
 ;// CONCATENATED MODULE: ./src/UI/DragButton.vue
 

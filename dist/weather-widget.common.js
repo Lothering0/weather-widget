@@ -9431,7 +9431,7 @@ const clearObject = (object) => {
 ;// CONCATENATED MODULE: ./src/api/OpenWeather/config.ts
 const config = {
     PATH: "https://api.openweathermap.org/data/2.5/weather?",
-    APPID: ({"NODE_ENV":"production","BASE_URL":"/"}).APPID || "1db6bd3fad9531f029bbb560463b62f2"
+    APPID: ({"NODE_ENV":"production","VUE_APP_CSS_LINK":"https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@latest/dist/weather-widget.css","VUE_APP_VUE_LINK":"https://unpkg.com/vue@3/dist/vue.global.js","BASE_URL":"/"}).APPID || "1db6bd3fad9531f029bbb560463b62f2"
 };
 
 ;// CONCATENATED MODULE: ./src/api/OpenWeather/helpers/generateUri.ts
@@ -24115,6 +24115,27 @@ var icons = {
 
 
 
+;// CONCATENATED MODULE: ./src/helpers/mountCssLink.ts
+const mountCssLink = () => {
+    const head = document.querySelector("head");
+    const mountPoint = head || document;
+    const element = document.createElement("link");
+    element.rel = "stylesheet";
+    element.href = "https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@latest/dist/weather-widget.css";
+    mountPoint.appendChild(element);
+};
+
+;// CONCATENATED MODULE: ./src/helpers/mountVueScript.ts
+const mountVueScript = () => {
+    const selector = 'script[src$="weather-widget.umd.min.js"]';
+    const mountPoint = document.querySelector(selector);
+    const element = document.createElement("script");
+    element.type = "text/javascript";
+    element.src = "https://unpkg.com/vue@3/dist/vue.global.js";
+    if (mountPoint)
+        mountPoint.before(element);
+};
+
 ;// CONCATENATED MODULE: ./src/main.ts
 
 
@@ -24123,7 +24144,10 @@ var icons = {
 
 
 
+
 library$1.add(faDroplet, faLocationArrow, faEye, faTemperatureLow, faArrowDown, faGear, faXmark, faTrash, faCirclePlus);
+mountCssLink();
+mountVueScript();
 (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createApp)(App)
     .component("FontAwesomeIcon", FontAwesomeIcon)
     .mount("weather-widget");

@@ -15,6 +15,7 @@ import {
   faTrash,
   faCirclePlus
 } from "@fortawesome/free-solid-svg-icons";
+import { mountCssLink, mountVueScript } from "./helpers";
 
 library.add(
   faDroplet,
@@ -27,6 +28,9 @@ library.add(
   faTrash,
   faCirclePlus
 );
+
+mountCssLink();
+mountVueScript();
 
 createApp(App)
   .component("FontAwesomeIcon", FontAwesomeIcon)

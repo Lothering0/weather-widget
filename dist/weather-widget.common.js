@@ -24127,7 +24127,7 @@ var icons = {
 library$1.add(faDroplet, faLocationArrow, faEye, faTemperatureLow, faArrowDown, faGear, faXmark, faTrash, faCirclePlus);
 (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createApp)(App)
     .component("FontAwesomeIcon", FontAwesomeIcon)
-    .mount("#app");
+    .mount("weather-widget");
 
 ;// CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
 

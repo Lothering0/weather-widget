@@ -9748,10 +9748,10 @@ const Card_exports_ = /*#__PURE__*/(0,exportHelper/* default */.Z)(Card_script, 
 
 ;// CONCATENATED MODULE: ./src/UI/Icon.vue?vue&type=script&setup=true&lang=ts
  
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/Icon.vue?vue&type=style&index=0&id=6f9ad27b&scoped=true&lang=scss
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/Icon.vue?vue&type=style&index=0&id=167ded3d&scoped=true&lang=scss
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/UI/Icon.vue?vue&type=style&index=0&id=6f9ad27b&scoped=true&lang=scss
+;// CONCATENATED MODULE: ./src/UI/Icon.vue?vue&type=style&index=0&id=167ded3d&scoped=true&lang=scss
 
 ;// CONCATENATED MODULE: ./src/UI/Icon.vue
 
@@ -9760,7 +9760,7 @@ const Card_exports_ = /*#__PURE__*/(0,exportHelper/* default */.Z)(Card_script, 
 ;
 
 
-const Icon_exports_ = /*#__PURE__*/(0,exportHelper/* default */.Z)(Iconvue_type_script_setup_true_lang_ts, [['__scopeId',"data-v-6f9ad27b"]])
+const Icon_exports_ = /*#__PURE__*/(0,exportHelper/* default */.Z)(Iconvue_type_script_setup_true_lang_ts, [['__scopeId',"data-v-167ded3d"]])
 
 /* harmony default export */ var Icon = (Icon_exports_);
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/ts-loader/index.js??clonedRuleSet-40.use[1]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/DeleteButton.vue?vue&type=script&setup=true&lang=ts

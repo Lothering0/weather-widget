@@ -43,7 +43,7 @@ const classes = {
   width: 60px;
   height: 60px;
 
-  background-image: url("@/assets/icons/weather_icons.svg");
+  background-image: url("https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@main/src/assets/icons/weather_icons.svg");
   background-repeat: no-repeat;
 
   &.#{$icon}-01d {
@@ -69,7 +69,7 @@ const classes = {
 
   &.#{$icon}-04d,
   &.#{$icon}-04n {
-    background-image: url("@/assets/icons/double_cloud.svg");
+    background-image: url("https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@main/src/assets/icons/double_cloud.svg");
     background-position-y: center;
   }
 

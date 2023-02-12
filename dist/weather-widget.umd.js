@@ -9120,17 +9120,6 @@ const mountCssLink = () => {
     mountPoint.appendChild(element);
 };
 
-;// CONCATENATED MODULE: ./src/helpers/mountVueScript.ts
-const mountVueScript = () => {
-    const selector = 'script[src$="weather-widget.umd.min.js"]';
-    const mountPoint = document.querySelector(selector);
-    const element = document.createElement("script");
-    element.type = "text/javascript";
-    element.src = "https://unpkg.com/vue@3/dist/vue.global.js";
-    if (mountPoint)
-        mountPoint.before(element);
-};
-
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__(203);
 ;// CONCATENATED MODULE: ./src/functions/compose.ts
@@ -24285,7 +24274,7 @@ var icons = {
 ;// CONCATENATED MODULE: ./src/main.ts
 
 mountCssLink();
-mountVueScript();
+// mountVueScript();
 
 
 

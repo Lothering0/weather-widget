@@ -1,7 +1,7 @@
 import { mountCssLink, mountVueScript } from "./helpers";
 
 mountCssLink();
-mountVueScript();
+// mountVueScript();
 
 import { createApp } from "vue";
 import "@/styles/reset.scss";

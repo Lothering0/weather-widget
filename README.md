@@ -7,6 +7,7 @@
 ```html
 <weather-widget></weather-widget>
 
+<script type="text/javascript" src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@release/dist/weather-widget.umd.min.js"></script>
 ```
 

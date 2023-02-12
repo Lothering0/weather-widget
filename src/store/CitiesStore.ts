@@ -1,5 +1,4 @@
 import { ref } from "vue";
-import { WeathersStore } from "./WeathersStore";
 import { compose, removeDuplicates } from "@/functions";
 import { city } from "@/types/browserApi";
 import { Maybe } from "@/types/common";
@@ -33,7 +32,6 @@ export class CitiesStore {
     const stringified = JSON.stringify(cities);
     localStorage.setItem(CitiesStore._KEY, stringified);
     CitiesStore._refreshCities();
-    WeathersStore.refresh();
 
     return cities;
   }

@@ -7,6 +7,7 @@ import Form from "./Form.vue";
 import Icon from "./Icon.vue";
 import Input from "./Input.vue";
 import Loader from "./Loader.vue";
+import Notifications from "./Notifications.vue";
 import SettingsButton from "./SettingsButton.vue";
 
 export {
@@ -19,5 +20,6 @@ export {
   Icon,
   Input,
   Loader,
+  Notifications,
   SettingsButton
 };

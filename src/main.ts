@@ -1,3 +1,5 @@
+import { mountCssLink, mountVueScript } from "./helpers";
+
 mountCssLink();
 mountVueScript();
 
@@ -18,7 +20,6 @@ import {
   faTrash,
   faCirclePlus
 } from "@fortawesome/free-solid-svg-icons";
-import { mountCssLink, mountVueScript } from "./helpers";
 
 library.add(
   faDroplet,

@@ -5,6 +5,5 @@ module.exports = {
         additionalData: '@import "@/styles/variables.scss";'
       }
     }
-  },
-  integrity: true
+  }
 }

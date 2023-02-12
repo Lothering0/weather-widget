@@ -10,15 +10,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { watch } from "vue";
 import { Loader } from "@/UI";
-import { WeathersStore } from "@/store";
-import { Maybe } from "@/types/common";
-import {
-  OpenWeatherResponse,
-  LanguageCode,
-  UnitsOfMeasurement
-} from "@/types/OpenWeatherApi";
+import { CitiesStore, WeathersStore } from "@/store";
+import { LanguageCode, UnitsOfMeasurement } from "@/types/OpenWeatherApi";
 import WeatherWidgetItem from "./WeatherWidgetItem.vue";
 
 const { lang, units } = defineProps<{
@@ -28,6 +23,7 @@ const { lang, units } = defineProps<{
 
 const isLoading = WeathersStore.isLoading;
 const weathers = WeathersStore.weathers;
+const cities = CitiesStore.cities;
 
-onMounted(async () => WeathersStore.fetch({ lang, units }));
+watch(cities, () => WeathersStore.fetch({ lang, units }), { immediate: true });
 </script>

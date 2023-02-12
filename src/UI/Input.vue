@@ -8,11 +8,13 @@
       @input="$emit('update:modelValue', $event.target.value)"
     >
     <label v-if="label" :for="id" :class="labelClasses">{{ label }}</label>
+    <Notifications class="ww-input-form__notifications" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
+import Notifications from "./Notifications.vue";
 
 const props = defineProps({
   id: {
@@ -51,6 +53,7 @@ const labelClasses = computed(() => ({
 <style lang="scss">
 $active: #a94ee8;
 $inactive: #ccc;
+$padding-x: 10px;
 
 .ww-input-form {
   display: flex;
@@ -62,7 +65,7 @@ $inactive: #ccc;
   label {
     @include transition;
     position: absolute;
-    left: 10px;
+    left: $padding-x;
     bottom: 2px;
 
     color: $inactive;
@@ -73,7 +76,7 @@ $inactive: #ccc;
   input {
     @include transition;
     border-bottom: 2px solid $inactive;
-    padding: 0 10px 2px;
+    padding: 0 $padding-x 2px;
 
     font-size: 15px;
     line-height: 15px;
@@ -97,6 +100,13 @@ $inactive: #ccc;
   input:focus + label {
     color: $active;
     transform: translateY(-24px);
+  }
+
+  &__notifications {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 48px;
   }
 }
 </style>

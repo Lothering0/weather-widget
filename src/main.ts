@@ -1,3 +1,6 @@
+mountCssLink();
+mountVueScript();
+
 import { createApp } from "vue";
 import "@/styles/reset.scss";
 import "@/styles/main.scss";
@@ -28,9 +31,6 @@ library.add(
   faTrash,
   faCirclePlus
 );
-
-mountCssLink();
-mountVueScript();
 
 createApp(App)
   .component("FontAwesomeIcon", FontAwesomeIcon)

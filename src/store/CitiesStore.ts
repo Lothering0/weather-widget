@@ -18,8 +18,7 @@ export class CitiesStore {
 
     if (!citiesItem) return null;
 
-    const cities = JSON.parse(citiesItem);
-    return cities;
+    return JSON.parse(citiesItem);
   }
 
   public static setCitiesIfStoreIsEmpty(city: city): city[] {

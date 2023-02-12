@@ -10000,10 +10000,10 @@ const Form_exports_ = Formvue_type_script_setup_true_lang_ts;
 
 ;// CONCATENATED MODULE: ./src/UI/Notification.vue?vue&type=script&setup=true&lang=ts
  
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/Notification.vue?vue&type=style&index=0&id=3d27d64b&scoped=true&lang=scss
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/Notification.vue?vue&type=style&index=0&id=037119d9&lang=scss
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/UI/Notification.vue?vue&type=style&index=0&id=3d27d64b&scoped=true&lang=scss
+;// CONCATENATED MODULE: ./src/UI/Notification.vue?vue&type=style&index=0&id=037119d9&lang=scss
 
 ;// CONCATENATED MODULE: ./src/UI/Notification.vue
 
@@ -10011,8 +10011,7 @@ const Form_exports_ = Formvue_type_script_setup_true_lang_ts;
 
 ;
 
-
-const Notification_exports_ = /*#__PURE__*/(0,exportHelper/* default */.Z)(Notificationvue_type_script_setup_true_lang_ts, [['__scopeId',"data-v-3d27d64b"]])
+const Notification_exports_ = Notificationvue_type_script_setup_true_lang_ts;
 
 /* harmony default export */ var Notification = (Notification_exports_);
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/ts-loader/index.js??clonedRuleSet-40.use[1]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/Notifications.vue?vue&type=script&setup=true&lang=ts
@@ -10052,16 +10051,9 @@ const Notificationsvue_type_script_setup_true_lang_ts_hoisted_1 = { class: "ww-n
 
 ;// CONCATENATED MODULE: ./src/UI/Notifications.vue?vue&type=script&setup=true&lang=ts
  
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/Notifications.vue?vue&type=style&index=0&id=10123edb&lang=scss
-// extracted by mini-css-extract-plugin
-
-;// CONCATENATED MODULE: ./src/UI/Notifications.vue?vue&type=style&index=0&id=10123edb&lang=scss
-
 ;// CONCATENATED MODULE: ./src/UI/Notifications.vue
 
 
-
-;
 
 const Notifications_exports_ = Notificationsvue_type_script_setup_true_lang_ts;
 
@@ -10444,10 +10436,10 @@ const WeatherWidgetSettingsList_exports_ = /*#__PURE__*/(0,exportHelper/* defaul
 
 ;// CONCATENATED MODULE: ./src/components/WeatherWidgetSettings/WeatherWidgetSettingsForm.vue?vue&type=script&setup=true&lang=ts
  
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/WeatherWidgetSettings/WeatherWidgetSettingsForm.vue?vue&type=style&index=0&id=5e3ffdba&scoped=true&lang=scss
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/WeatherWidgetSettings/WeatherWidgetSettingsForm.vue?vue&type=style&index=0&id=afdb3bb4&lang=scss
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/components/WeatherWidgetSettings/WeatherWidgetSettingsForm.vue?vue&type=style&index=0&id=5e3ffdba&scoped=true&lang=scss
+;// CONCATENATED MODULE: ./src/components/WeatherWidgetSettings/WeatherWidgetSettingsForm.vue?vue&type=style&index=0&id=afdb3bb4&lang=scss
 
 ;// CONCATENATED MODULE: ./src/components/WeatherWidgetSettings/WeatherWidgetSettingsForm.vue
 
@@ -10455,8 +10447,7 @@ const WeatherWidgetSettingsList_exports_ = /*#__PURE__*/(0,exportHelper/* defaul
 
 ;
 
-
-const WeatherWidgetSettingsForm_exports_ = /*#__PURE__*/(0,exportHelper/* default */.Z)(WeatherWidgetSettingsFormvue_type_script_setup_true_lang_ts, [['__scopeId',"data-v-5e3ffdba"]])
+const WeatherWidgetSettingsForm_exports_ = WeatherWidgetSettingsFormvue_type_script_setup_true_lang_ts;
 
 /* harmony default export */ var WeatherWidgetSettingsForm = (WeatherWidgetSettingsForm_exports_);
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/ts-loader/index.js??clonedRuleSet-40.use[1]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/WeatherWidgetSettings/WeatherWidgetSettings.vue?vue&type=script&setup=true&lang=ts

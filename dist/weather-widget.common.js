@@ -9597,8 +9597,7 @@ class CitiesStore {
         const citiesItem = localStorage.getItem(CitiesStore._KEY);
         if (!citiesItem)
             return null;
-        const cities = JSON.parse(citiesItem);
-        return cities;
+        return JSON.parse(citiesItem);
     }
     static setCitiesIfStoreIsEmpty(city) {
         const cities = CitiesStore.cities.value;
@@ -24137,6 +24136,8 @@ const mountVueScript = () => {
 };
 
 ;// CONCATENATED MODULE: ./src/main.ts
+mountCssLink();
+mountVueScript();
 
 
 
@@ -24146,8 +24147,6 @@ const mountVueScript = () => {
 
 
 library$1.add(faDroplet, faLocationArrow, faEye, faTemperatureLow, faArrowDown, faGear, faXmark, faTrash, faCirclePlus);
-mountCssLink();
-mountVueScript();
 (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createApp)(App)
     .component("FontAwesomeIcon", FontAwesomeIcon)
     .mount("weather-widget");

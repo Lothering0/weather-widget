@@ -9100,8 +9100,124 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
+;// CONCATENATED MODULE: ./src/helpers/mountCssLink.ts
+const mountCssLink = () => {
+    const head = document.querySelector("head");
+    const mountPoint = head || document;
+    const element = document.createElement("link");
+    element.rel = "stylesheet";
+    element.href = "https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@main/dist/weather-widget.css";
+    mountPoint.appendChild(element);
+};
+
+;// CONCATENATED MODULE: ./src/helpers/mountVueScript.ts
+const mountVueScript = () => {
+    const selector = 'script[src$="weather-widget.umd.min.js"]';
+    const mountPoint = document.querySelector(selector);
+    const element = document.createElement("script");
+    element.type = "text/javascript";
+    element.src = "https://unpkg.com/vue@3/dist/vue.global.js";
+    if (mountPoint)
+        mountPoint.before(element);
+};
+
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__(797);
+;// CONCATENATED MODULE: ./src/functions/compose.ts
+const compose = (...functions) => (value) => {
+    return functions.reduceRight((previous, currentFunction) => {
+        return currentFunction(previous);
+    }, value);
+};
+
+;// CONCATENATED MODULE: ./src/functions/removeDuplicates.ts
+const removeDuplicates = (array) => {
+    return [...new Set(array)];
+};
+
+;// CONCATENATED MODULE: ./src/store/CitiesStore.ts
+
+
+class CitiesStore {
+    static _refreshCities() {
+        CitiesStore.cities.value = CitiesStore._getCities();
+    }
+    static _getCities() {
+        const citiesItem = localStorage.getItem(CitiesStore._KEY);
+        if (!citiesItem)
+            return null;
+        return JSON.parse(citiesItem);
+    }
+    static setCitiesIfStoreIsEmpty(city) {
+        const cities = CitiesStore.cities.value;
+        if (cities)
+            return cities;
+        return CitiesStore.setCities([city]);
+    }
+    static setCities(cities) {
+        const stringified = JSON.stringify(cities);
+        localStorage.setItem(CitiesStore._KEY, stringified);
+        CitiesStore._refreshCities();
+        return cities;
+    }
+    static push(city) {
+        const push = compose(CitiesStore.setCities, removeDuplicates);
+        const cities = CitiesStore.cities.value;
+        if (!cities)
+            return CitiesStore.setCitiesIfStoreIsEmpty(city);
+        const value = [...cities, city];
+        return push(value);
+    }
+    static remove(city) {
+        const cities = CitiesStore.cities.value;
+        if (!cities)
+            return cities;
+        const filtered = cities.filter((item) => item !== city);
+        return CitiesStore.setCities(filtered);
+    }
+}
+Object.defineProperty(CitiesStore, "_KEY", {
+    enumerable: true,
+    configurable: true,
+    writable: true,
+    value: "ww-cities"
+});
+Object.defineProperty(CitiesStore, "cities", {
+    enumerable: true,
+    configurable: true,
+    writable: true,
+    value: (0,external_commonjs_vue_commonjs2_vue_root_Vue_.ref)(CitiesStore._getCities())
+});
+
+;// CONCATENATED MODULE: ./src/store/NotificationsStore.ts
+
+class NotificationsStore {
+    static _setField(field, value) {
+        const totalLength = value.length + NotificationsStore[field].length;
+        for (let index = 0; index < totalLength; index++) {
+            NotificationsStore[field][index] = value[index];
+        }
+    }
+    static setErrors(errors) {
+        NotificationsStore._setField("errors", errors);
+    }
+    static setWarnings(warnings) {
+        NotificationsStore._setField("warnings", warnings);
+    }
+}
+Object.defineProperty(NotificationsStore, "errors", {
+    enumerable: true,
+    configurable: true,
+    writable: true,
+    value: (0,external_commonjs_vue_commonjs2_vue_root_Vue_.reactive)([])
+});
+Object.defineProperty(NotificationsStore, "warnings", {
+    enumerable: true,
+    configurable: true,
+    writable: true,
+    value: (0,external_commonjs_vue_commonjs2_vue_root_Vue_.reactive)([])
+});
+
 ;// CONCATENATED MODULE: ./node_modules/tslib/tslib.es6.js
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -9397,13 +9513,6 @@ function __classPrivateFieldIn(state, receiver) {
     return typeof state === "function" ? receiver === state : state.has(receiver);
 }
 
-;// CONCATENATED MODULE: ./src/functions/compose.ts
-const compose = (...functions) => (value) => {
-    return functions.reduceRight((previous, currentFunction) => {
-        return currentFunction(previous);
-    }, value);
-};
-
 ;// CONCATENATED MODULE: ./src/functions/makeQueryURL.ts
 const makeQueryURL = (data) => {
     return new URLSearchParams(data).toString();
@@ -9463,14 +9572,19 @@ const getResponses = (params, positions) => {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         if (!positions.length)
             return [];
-        const responses = [];
+        const response = [];
+        const errors = [];
         for (const position of positions) {
             const uri = generateUri(params, position);
             const data = yield fetch(uri);
             const json = yield data.json();
-            responses.push(json);
+            if (json.cod == "404") {
+                errors.push(`City "${position}" is not exist!`);
+                continue;
+            }
+            response.push(json);
         }
-        resolve(responses);
+        resolve({ response, errors });
     }));
 };
 
@@ -9522,7 +9636,10 @@ function getPosition() {
 const fetchWeather = (params) => __awaiter(void 0, void 0, void 0, function* () {
     const positions = yield getPosition();
     if (!positions.length)
-        return [];
+        return {
+            errors: [],
+            response: []
+        };
     return getResponses(params, positions);
 });
 
@@ -9534,13 +9651,15 @@ const fetchWeather = (params) => __awaiter(void 0, void 0, void 0, function* () 
 
 
 
+
 class WeathersStore {
     static fetch(params) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 WeathersStore.isLoading.value = true;
                 WeathersStore._lastFetchParams = params;
-                const response = yield fetchWeather(params);
+                const { response, errors } = yield fetchWeather(params);
+                NotificationsStore.setErrors(errors);
                 if (response[0])
                     CitiesStore.setCitiesIfStoreIsEmpty(response[0].name);
                 WeathersStore.weathers.value = response;
@@ -9580,68 +9699,8 @@ Object.defineProperty(WeathersStore, "weathers", {
     value: (0,external_commonjs_vue_commonjs2_vue_root_Vue_.ref)(null)
 });
 
-;// CONCATENATED MODULE: ./src/functions/removeDuplicates.ts
-const removeDuplicates = (array) => {
-    return [...new Set(array)];
-};
-
-;// CONCATENATED MODULE: ./src/store/CitiesStore.ts
-
-
-
-class CitiesStore {
-    static _refreshCities() {
-        CitiesStore.cities.value = CitiesStore._getCities();
-    }
-    static _getCities() {
-        const citiesItem = localStorage.getItem(CitiesStore._KEY);
-        if (!citiesItem)
-            return null;
-        return JSON.parse(citiesItem);
-    }
-    static setCitiesIfStoreIsEmpty(city) {
-        const cities = CitiesStore.cities.value;
-        if (cities)
-            return cities;
-        return CitiesStore.setCities([city]);
-    }
-    static setCities(cities) {
-        const stringified = JSON.stringify(cities);
-        localStorage.setItem(CitiesStore._KEY, stringified);
-        CitiesStore._refreshCities();
-        WeathersStore.refresh();
-        return cities;
-    }
-    static push(city) {
-        const push = compose(CitiesStore.setCities, removeDuplicates);
-        const cities = CitiesStore.cities.value;
-        if (!cities)
-            return CitiesStore.setCitiesIfStoreIsEmpty(city);
-        const value = [...cities, city];
-        return push(value);
-    }
-    static remove(city) {
-        const cities = CitiesStore.cities.value;
-        if (!cities)
-            return cities;
-        const filtered = cities.filter((item) => item !== city);
-        return CitiesStore.setCities(filtered);
-    }
-}
-Object.defineProperty(CitiesStore, "_KEY", {
-    enumerable: true,
-    configurable: true,
-    writable: true,
-    value: "ww-cities"
-});
-Object.defineProperty(CitiesStore, "cities", {
-    enumerable: true,
-    configurable: true,
-    writable: true,
-    value: (0,external_commonjs_vue_commonjs2_vue_root_Vue_.ref)(CitiesStore._getCities())
-});
-
 ;// CONCATENATED MODULE: ./src/store/index.ts
+
 
 
 
@@ -9913,12 +9972,107 @@ const EnterButton_exports_ = /*#__PURE__*/(0,exportHelper/* default */.Z)(EnterB
 const Form_exports_ = Formvue_type_script_setup_true_lang_ts;
 
 /* harmony default export */ var Form = (Form_exports_);
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/ts-loader/index.js??clonedRuleSet-40.use[1]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/Notification.vue?vue&type=script&setup=true&lang=ts
+
+
+
+/* harmony default export */ var Notificationvue_type_script_setup_true_lang_ts = (/*#__PURE__*/(0,external_commonjs_vue_commonjs2_vue_root_Vue_.defineComponent)({
+    __name: 'Notification',
+    props: {
+        value: null,
+        type: null
+    },
+    setup(__props) {
+        const props = __props;
+        const classes = ["ww-notification", `ww-notification--${props.type}`];
+        return (_ctx, _cache) => {
+            return ((0,external_commonjs_vue_commonjs2_vue_root_Vue_.openBlock)(), (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createBlock)(Card, {
+                class: (0,external_commonjs_vue_commonjs2_vue_root_Vue_.normalizeClass)(classes)
+            }, {
+                default: (0,external_commonjs_vue_commonjs2_vue_root_Vue_.withCtx)(() => [
+                    (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createTextVNode)((0,external_commonjs_vue_commonjs2_vue_root_Vue_.toDisplayString)(__props.value), 1)
+                ]),
+                _: 1
+            }));
+        };
+    }
+}));
+
+;// CONCATENATED MODULE: ./src/UI/Notification.vue?vue&type=script&setup=true&lang=ts
+ 
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/Notification.vue?vue&type=style&index=0&id=3d27d64b&scoped=true&lang=scss
+// extracted by mini-css-extract-plugin
+
+;// CONCATENATED MODULE: ./src/UI/Notification.vue?vue&type=style&index=0&id=3d27d64b&scoped=true&lang=scss
+
+;// CONCATENATED MODULE: ./src/UI/Notification.vue
+
+
+
+;
+
+
+const Notification_exports_ = /*#__PURE__*/(0,exportHelper/* default */.Z)(Notificationvue_type_script_setup_true_lang_ts, [['__scopeId',"data-v-3d27d64b"]])
+
+/* harmony default export */ var Notification = (Notification_exports_);
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/ts-loader/index.js??clonedRuleSet-40.use[1]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/Notifications.vue?vue&type=script&setup=true&lang=ts
+
+
+const Notificationsvue_type_script_setup_true_lang_ts_hoisted_1 = { class: "ww-notifications" };
+
+
+
+/* harmony default export */ var Notificationsvue_type_script_setup_true_lang_ts = (/*#__PURE__*/(0,external_commonjs_vue_commonjs2_vue_root_Vue_.defineComponent)({
+    __name: 'Notifications',
+    setup(__props) {
+        const errors = NotificationsStore.errors;
+        const warnings = NotificationsStore.warnings;
+        const filteredErrors = (0,external_commonjs_vue_commonjs2_vue_root_Vue_.computed)(() => errors.filter(Boolean));
+        const filteredWarnings = (0,external_commonjs_vue_commonjs2_vue_root_Vue_.computed)(() => warnings.filter(Boolean));
+        return (_ctx, _cache) => {
+            return ((0,external_commonjs_vue_commonjs2_vue_root_Vue_.openBlock)(), (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createElementBlock)("div", Notificationsvue_type_script_setup_true_lang_ts_hoisted_1, [
+                ((0,external_commonjs_vue_commonjs2_vue_root_Vue_.openBlock)(true), (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createElementBlock)(external_commonjs_vue_commonjs2_vue_root_Vue_.Fragment, null, (0,external_commonjs_vue_commonjs2_vue_root_Vue_.renderList)((0,external_commonjs_vue_commonjs2_vue_root_Vue_.unref)(filteredErrors), (error) => {
+                    return ((0,external_commonjs_vue_commonjs2_vue_root_Vue_.openBlock)(), (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createBlock)(Notification, {
+                        type: "error",
+                        value: error,
+                        key: error
+                    }, null, 8, ["value"]));
+                }), 128)),
+                ((0,external_commonjs_vue_commonjs2_vue_root_Vue_.openBlock)(true), (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createElementBlock)(external_commonjs_vue_commonjs2_vue_root_Vue_.Fragment, null, (0,external_commonjs_vue_commonjs2_vue_root_Vue_.renderList)((0,external_commonjs_vue_commonjs2_vue_root_Vue_.unref)(filteredWarnings), (warning) => {
+                    return ((0,external_commonjs_vue_commonjs2_vue_root_Vue_.openBlock)(), (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createBlock)(Notification, {
+                        type: "warning",
+                        value: warning,
+                        key: warning
+                    }, null, 8, ["value"]));
+                }), 128))
+            ]));
+        };
+    }
+}));
+
+;// CONCATENATED MODULE: ./src/UI/Notifications.vue?vue&type=script&setup=true&lang=ts
+ 
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/Notifications.vue?vue&type=style&index=0&id=10123edb&lang=scss
+// extracted by mini-css-extract-plugin
+
+;// CONCATENATED MODULE: ./src/UI/Notifications.vue?vue&type=style&index=0&id=10123edb&lang=scss
+
+;// CONCATENATED MODULE: ./src/UI/Notifications.vue
+
+
+
+;
+
+const Notifications_exports_ = Notificationsvue_type_script_setup_true_lang_ts;
+
+/* harmony default export */ var Notifications = (Notifications_exports_);
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/ts-loader/index.js??clonedRuleSet-40.use[1]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/Input.vue?vue&type=script&setup=true&lang=ts
 
 
 const Inputvue_type_script_setup_true_lang_ts_hoisted_1 = { class: "ww-input-form" };
 const Inputvue_type_script_setup_true_lang_ts_hoisted_2 = ["id", "placeholder"];
 const Inputvue_type_script_setup_true_lang_ts_hoisted_3 = ["for"];
+
 
 /* harmony default export */ var Inputvue_type_script_setup_true_lang_ts = (/*#__PURE__*/(0,external_commonjs_vue_commonjs2_vue_root_Vue_.defineComponent)({
     __name: 'Input',
@@ -9971,7 +10125,8 @@ const Inputvue_type_script_setup_true_lang_ts_hoisted_3 = ["for"];
                         for: __props.id,
                         class: (0,external_commonjs_vue_commonjs2_vue_root_Vue_.normalizeClass)((0,external_commonjs_vue_commonjs2_vue_root_Vue_.unref)(labelClasses))
                     }, (0,external_commonjs_vue_commonjs2_vue_root_Vue_.toDisplayString)(__props.label), 11, Inputvue_type_script_setup_true_lang_ts_hoisted_3))
-                    : (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createCommentVNode)("", true)
+                    : (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createCommentVNode)("", true),
+                (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createVNode)(Notifications, { class: "ww-input-form__notifications" })
             ]));
         };
     }
@@ -9979,10 +10134,10 @@ const Inputvue_type_script_setup_true_lang_ts_hoisted_3 = ["for"];
 
 ;// CONCATENATED MODULE: ./src/UI/Input.vue?vue&type=script&setup=true&lang=ts
  
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/Input.vue?vue&type=style&index=0&id=13d2ebff&lang=scss
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/UI/Input.vue?vue&type=style&index=0&id=229c7100&lang=scss
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/UI/Input.vue?vue&type=style&index=0&id=13d2ebff&lang=scss
+;// CONCATENATED MODULE: ./src/UI/Input.vue?vue&type=style&index=0&id=229c7100&lang=scss
 
 ;// CONCATENATED MODULE: ./src/UI/Input.vue
 
@@ -10142,6 +10297,7 @@ const SettingsButton_exports_ = /*#__PURE__*/(0,exportHelper/* default */.Z)(Set
 
 
 
+
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/ts-loader/index.js??clonedRuleSet-40.use[1]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/WeatherWidgetSettings/WeatherWidgetSettingsItem.vue?vue&type=script&setup=true&lang=ts
 
 
@@ -10249,6 +10405,19 @@ const WeatherWidgetSettingsList_exports_ = /*#__PURE__*/(0,exportHelper/* defaul
     __name: 'WeatherWidgetSettingsForm',
     setup(__props) {
         const value = (0,external_commonjs_vue_commonjs2_vue_root_Vue_.ref)("");
+        const cities = CitiesStore.cities;
+        const isButtonDisabled = (0,external_commonjs_vue_commonjs2_vue_root_Vue_.computed)(() => {
+            NotificationsStore.setWarnings([]);
+            if (!value.value.length)
+                return true;
+            if (!cities.value)
+                return false;
+            const isIncludes = cities.value.includes(value.value);
+            if (!isIncludes)
+                return false;
+            NotificationsStore.setWarnings([`City ${value.value} is already exist!`]);
+            return true;
+        });
         const addCityToStore = () => {
             CitiesStore.push(value.value);
             value.value = "";
@@ -10265,9 +10434,7 @@ const WeatherWidgetSettingsList_exports_ = /*#__PURE__*/(0,exportHelper/* defaul
                         id: "city-name-input",
                         label: "Add location"
                     }, null, 8, ["modelValue"]),
-                    (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createVNode)((0,external_commonjs_vue_commonjs2_vue_root_Vue_.unref)(EnterButton), {
-                        disabled: !value.value.length
-                    }, null, 8, ["disabled"])
+                    (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createVNode)((0,external_commonjs_vue_commonjs2_vue_root_Vue_.unref)(EnterButton), { disabled: (0,external_commonjs_vue_commonjs2_vue_root_Vue_.unref)(isButtonDisabled) }, null, 8, ["disabled"])
                 ]),
                 _: 1
             }));
@@ -10277,10 +10444,10 @@ const WeatherWidgetSettingsList_exports_ = /*#__PURE__*/(0,exportHelper/* defaul
 
 ;// CONCATENATED MODULE: ./src/components/WeatherWidgetSettings/WeatherWidgetSettingsForm.vue?vue&type=script&setup=true&lang=ts
  
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/WeatherWidgetSettings/WeatherWidgetSettingsForm.vue?vue&type=style&index=0&id=58e1d1e0&scoped=true&lang=scss
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/WeatherWidgetSettings/WeatherWidgetSettingsForm.vue?vue&type=style&index=0&id=5e3ffdba&scoped=true&lang=scss
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/components/WeatherWidgetSettings/WeatherWidgetSettingsForm.vue?vue&type=style&index=0&id=58e1d1e0&scoped=true&lang=scss
+;// CONCATENATED MODULE: ./src/components/WeatherWidgetSettings/WeatherWidgetSettingsForm.vue?vue&type=style&index=0&id=5e3ffdba&scoped=true&lang=scss
 
 ;// CONCATENATED MODULE: ./src/components/WeatherWidgetSettings/WeatherWidgetSettingsForm.vue
 
@@ -10289,7 +10456,7 @@ const WeatherWidgetSettingsList_exports_ = /*#__PURE__*/(0,exportHelper/* defaul
 ;
 
 
-const WeatherWidgetSettingsForm_exports_ = /*#__PURE__*/(0,exportHelper/* default */.Z)(WeatherWidgetSettingsFormvue_type_script_setup_true_lang_ts, [['__scopeId',"data-v-58e1d1e0"]])
+const WeatherWidgetSettingsForm_exports_ = /*#__PURE__*/(0,exportHelper/* default */.Z)(WeatherWidgetSettingsFormvue_type_script_setup_true_lang_ts, [['__scopeId',"data-v-5e3ffdba"]])
 
 /* harmony default export */ var WeatherWidgetSettingsForm = (WeatherWidgetSettingsForm_exports_);
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/ts-loader/index.js??clonedRuleSet-40.use[1]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/WeatherWidgetSettings/WeatherWidgetSettings.vue?vue&type=script&setup=true&lang=ts
@@ -10723,7 +10890,6 @@ const WeatherWidgetItem_exports_ = /*#__PURE__*/(0,exportHelper/* default */.Z)(
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/ts-loader/index.js??clonedRuleSet-40.use[1]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/WeatherWidget/WeatherWidgetList.vue?vue&type=script&setup=true&lang=ts
 
 
-
 const WeatherWidgetListvue_type_script_setup_true_lang_ts_hoisted_1 = {
     key: 1,
     class: "weather-widget__list"
@@ -10742,7 +10908,8 @@ const WeatherWidgetListvue_type_script_setup_true_lang_ts_hoisted_1 = {
         const { lang, units } = __props;
         const isLoading = WeathersStore.isLoading;
         const weathers = WeathersStore.weathers;
-        (0,external_commonjs_vue_commonjs2_vue_root_Vue_.onMounted)(() => __awaiter(this, void 0, void 0, function* () { return WeathersStore.fetch({ lang, units }); }));
+        const cities = CitiesStore.cities;
+        (0,external_commonjs_vue_commonjs2_vue_root_Vue_.watch)(cities, () => WeathersStore.fetch({ lang, units }), { immediate: true });
         return (_ctx, _cache) => {
             return ((0,external_commonjs_vue_commonjs2_vue_root_Vue_.unref)(isLoading))
                 ? ((0,external_commonjs_vue_commonjs2_vue_root_Vue_.openBlock)(), (0,external_commonjs_vue_commonjs2_vue_root_Vue_.createBlock)((0,external_commonjs_vue_commonjs2_vue_root_Vue_.unref)(Loader), { key: 0 }))
@@ -24114,31 +24281,10 @@ var icons = {
 
 
 
-;// CONCATENATED MODULE: ./src/helpers/mountCssLink.ts
-const mountCssLink = () => {
-    const head = document.querySelector("head");
-    const mountPoint = head || document;
-    const element = document.createElement("link");
-    element.rel = "stylesheet";
-    element.href = "https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@main/dist/weather-widget.css";
-    mountPoint.appendChild(element);
-};
-
-;// CONCATENATED MODULE: ./src/helpers/mountVueScript.ts
-const mountVueScript = () => {
-    const selector = 'script[src$="weather-widget.umd.min.js"]';
-    const mountPoint = document.querySelector(selector);
-    const element = document.createElement("script");
-    element.type = "text/javascript";
-    element.src = "https://unpkg.com/vue@3/dist/vue.global.js";
-    if (mountPoint)
-        mountPoint.before(element);
-};
-
 ;// CONCATENATED MODULE: ./src/main.ts
+
 mountCssLink();
 mountVueScript();
-
 
 
 

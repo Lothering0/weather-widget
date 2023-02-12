@@ -35,7 +35,7 @@ const addCityToStore = () => {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .weather-widget__settings-form {
   display: flex;
   align-items: flex-end;

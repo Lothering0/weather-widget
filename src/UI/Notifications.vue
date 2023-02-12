@@ -26,7 +26,3 @@ const warnings = NotificationsStore.warnings;
 const filteredErrors = computed(() => errors.filter(Boolean));
 const filteredWarnings = computed(() => warnings.filter(Boolean));
 </script>
-
-<style lang="scss">
-ww-notification {}
-</style>

@@ -7,7 +7,7 @@
 ```html
 <weather-widget></weather-widget>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@main/dist/weather-widget.umd.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Lothering0/weather-widget@release/dist/weather-widget.umd.min.js"></script>
 ```
 
 ## Project setup
